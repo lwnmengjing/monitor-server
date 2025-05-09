@@ -13,16 +13,12 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/mss-boot-io/mss-boot/pkg/response"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
-
-	_ "service-http/apis"
-	_ "service-http/docs"
+	_ "monitor-server/apis"
 )
 
 func Init(r *gin.RouterGroup) {
 	v1 := r.Group("/api")
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	//r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	configCors := cors.DefaultConfig()
 	configCors.AllowOrigins = []string{"http://localhost:3000"}
 	configCors.AllowCredentials = true

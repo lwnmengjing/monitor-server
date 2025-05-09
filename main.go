@@ -1,6 +1,6 @@
 package main
 
-import "service-http/cmd"
+import "monitor-server/cmd"
 
 /*
  * @Author: lwnmengjing<lwnmengjing@qq.com>
@@ -9,9 +9,9 @@ import "service-http/cmd"
  * @Last Modified time: 2023/10/31 16:29:28
  */
 
-// @title service-http API
+// @title monitor-server API
 // @version 0.0.1
-// @description service-http接口文档
+// @description monitor-server接口文档
 // @securityDefinitions.apikey Bearer
 // @in header
 // @name Authorization

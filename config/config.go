@@ -1,11 +1,11 @@
 package config
 
 import (
+	"github.com/mss-boot-io/mss-boot/pkg/config/storage"
 	"log/slog"
 	"os"
 
 	"github.com/mss-boot-io/mss-boot/pkg/config"
-	"github.com/mss-boot-io/mss-boot/pkg/config/gormdb"
 	"github.com/mss-boot-io/mss-boot/pkg/config/source"
 )
 
@@ -19,9 +19,10 @@ import (
 var Cfg Config
 
 type Config struct {
-	Server   config.Listen    `yaml:"server" json:"server"`
-	Database *gormdb.Database `yaml:"database" json:"database"`
-	Logger   config.Logger    `yaml:"logger" json:"logger"`
+	Server config.Listen `yaml:"server" json:"server"`
+	Logger config.Logger `yaml:"logger" json:"logger"`
+	Queue  config.Queue  `yaml:"queue" json:"queue"`
+	mq     storage.AdapterQueue
 }
 
 func (e *Config) Init() {
@@ -35,12 +36,22 @@ func (e *Config) Init() {
 		os.Exit(-1)
 	}
 
+	e.Queue.Init(func(queue storage.AdapterQueue) {
+		e.mq = queue
+	})
+
 	e.Logger.Init()
-	e.Database.Init()
 }
 
 func (e *Config) OnChange() {
 	e.Logger.Init()
-	e.Database.Init()
+	e.Queue.Init(func(queue storage.AdapterQueue) {
+		e.mq = queue
+	})
+
 	slog.Info("!!! cfg change and reload")
+}
+
+func (e *Config) GetMQ() storage.AdapterQueue {
+	return e.mq
 }

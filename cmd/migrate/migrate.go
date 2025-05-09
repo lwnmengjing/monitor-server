@@ -9,9 +9,9 @@ import (
 	"github.com/mss-boot-io/mss-boot/pkg/migration/models"
 	"github.com/spf13/cobra"
 
-	_ "service-http/cmd/migrate/migration/custom"
-	_ "service-http/cmd/migrate/migration/system"
-	"service-http/config"
+	_ "monitor-server/cmd/migrate/migration/custom"
+	_ "monitor-server/cmd/migrate/migration/system"
+	"monitor-server/config"
 )
 
 /*
