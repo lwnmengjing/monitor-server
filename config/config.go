@@ -1,12 +1,13 @@
 package config
 
 import (
-	"github.com/mss-boot-io/mss-boot/pkg/config/storage"
+	"embed"
 	"log/slog"
 	"os"
 
 	"github.com/mss-boot-io/mss-boot/pkg/config"
 	"github.com/mss-boot-io/mss-boot/pkg/config/source"
+	"github.com/mss-boot-io/mss-boot/pkg/config/storage"
 )
 
 /*
@@ -15,6 +16,9 @@ import (
  * @Last Modified by: lwnmengjing<lwnmengjing@qq.com>
  * @Last Modified time: 2023/10/31 16:37:31
  */
+
+//go:embed *.yml
+var FS embed.FS
 
 var Cfg Config
 
@@ -27,8 +31,8 @@ type Config struct {
 
 func (e *Config) Init() {
 	opts := []source.Option{
-		source.WithDir("config"),
-		source.WithProvider(source.Local),
+		source.WithProvider(source.FS),
+		source.WithFrom(FS),
 	}
 	err := config.Init(e, opts...)
 	if err != nil {
